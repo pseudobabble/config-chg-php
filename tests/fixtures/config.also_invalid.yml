@@ -1,0 +1,6 @@
+---
+{{ blah }}: "This {{ works }} but "fdfdfdfdfdf
+dependencies:
+  - mysql
+  - "redis$$"$$
+

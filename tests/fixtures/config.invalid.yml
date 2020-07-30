@@ -1,0 +1,6 @@
+---
+{{ blah }}: Authentication API
+dependencies:
+  - mysql
+  - redis
+
