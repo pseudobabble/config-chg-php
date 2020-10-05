@@ -10,8 +10,10 @@ use App\Parser\YamlParser;
 
 /**
  * Config
- *
  * This class is responsible for parsing configuration files.
+ *
+ * Parsers should be specified in the following format:
+ * ['parsed_file_extension_without_dot' => FQN_of_parser]
  */
 class Config
 {
@@ -19,10 +21,6 @@ class Config
      * @var string
      */
     private string $baseDirectory;
-    /**
-     * @var array|string[]
-     */
-    private array $allowedExtensions = ['json', 'yml', 'yaml'];
     /**
      * @var array|string[]
      */
@@ -109,11 +107,13 @@ class Config
     {
         $extension = pathinfo($path, PATHINFO_EXTENSION);
 
-        $allowedExtensions = implode(', ', $this->allowedExtensions);
-        if (!in_array($extension, $this->allowedExtensions)) {
+        $allowedExtensions = array_keys($this->parsers);
+        if (!in_array($extension, $allowedExtensions)) {
+            $allowedExtensionsString = implode(', ', $allowedExtensions);
+
             throw new InvalidFileException(
                 "The file at path $path is not allowed." .
-                " Allowed file types are $allowedExtensions"
+                " Allowed file types are $allowedExtensionsString"
             );
         }
 
