@@ -3,6 +3,9 @@
 namespace App\Tests;
 
 use App\Config;
+use App\Exception\InvalidFileException;
+use App\Exception\InvalidKeyException;
+use App\Exception\MissingFileException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -50,8 +53,6 @@ class ConfigTest extends TestCase
 
     public function test_SingleFile_WhenMissing_ErrorsCorrectly(): void
     {
-        $this->markTestSkipped();
-
         $this->expectException(MissingFileException::class);
 
         $this->config->load('fixtures/config.missing.json');
@@ -59,8 +60,6 @@ class ConfigTest extends TestCase
 
     public function test_SingleFile_WhenInvalid_ErrorsCorrectly(): void
     {
-        $this->markTestSkipped();
-
         $this->expectException(InvalidFileException::class);
 
         $this->config->load('fixtures/config.invalid.json');
@@ -70,8 +69,6 @@ class ConfigTest extends TestCase
 
     public function test_MultipleFiles_AsMultipleArguments_CanBeLoadedCorrectly(): void
     {
-        $this->markTestSkipped();
-
         $this->config->load('fixtures/config.json', 'fixtures/config.local.json');
 
         $result = $this->config->getAll();
@@ -95,8 +92,6 @@ class ConfigTest extends TestCase
 
     public function test_MultipleFiles_AsMultipleMethods_CanBeLoadedCorrectly(): void
     {
-        $this->markTestSkipped();
-
         $this->config->load('fixtures/config.json');
         $this->config->load('fixtures/config.local.json');
 
@@ -121,8 +116,6 @@ class ConfigTest extends TestCase
 
     public function test_MultipleFiles_AsMultipleArguments_WhenOneFileIsMissing_ErrorsCorrectly(): void
     {
-        $this->markTestSkipped();
-
         $this->expectException(MissingFileException::class);
 
         $this->config->load('fixtures/config.json', 'fixtures/config.missing.json');
@@ -130,8 +123,6 @@ class ConfigTest extends TestCase
 
     public function test_MultipleFiles_AsMultipleArguments_WhenOneFileIsInvalid_ErrorsCorrectly(): void
     {
-        $this->markTestSkipped();
-
         $this->expectException(InvalidFileException::class);
 
         $this->config->load('fixtures/config.json', 'fixtures/config.invalid.json');
@@ -139,8 +130,6 @@ class ConfigTest extends TestCase
 
     public function test_MultipleFiles_AsMultipleArguments_WhenAllFilesAreMissing_ErrorsCorrectly(): void
     {
-        $this->markTestSkipped();
-
         $this->expectException(MissingFileException::class);
 
         $this->config->load('fixtures/config.missing.json', 'fixtures/config.also_missing.json');
@@ -148,8 +137,6 @@ class ConfigTest extends TestCase
 
     public function test_MultipleFiles_AsMultipleArguments_WhenAllFilesAreInvalid_ErrorsCorrectly(): void
     {
-        $this->markTestSkipped();
-
         $this->expectException(InvalidFileException::class);
 
         $this->config->load('fixtures/config.invalid.json', 'fixtures/config.also_invalid.json');
@@ -157,8 +144,6 @@ class ConfigTest extends TestCase
 
     public function test_MultipleFiles_AsMultipleMethods_WhenOneFileIsMissing_ErrorsCorrectly(): void
     {
-        $this->markTestSkipped();
-
         $this->expectException(MissingFileException::class);
 
         $this->config->load('fixtures/config.json');
@@ -167,8 +152,6 @@ class ConfigTest extends TestCase
 
     public function test_MultipleFiles_AsMultipleMethods_WhenOneFileIsInvalid_ErrorsCorrectly(): void
     {
-        $this->markTestSkipped();
-
         $this->expectException(InvalidFileException::class);
 
         $this->config->load('fixtures/config.json');
@@ -177,8 +160,6 @@ class ConfigTest extends TestCase
 
     public function test_MultipleFiles_AsMultipleMethods_WhenAllFilesAreMissing_ErrorsCorrectly(): void
     {
-        $this->markTestSkipped();
-
         $this->expectException(MissingFileException::class);
 
         $this->config->load('fixtures/config.missing.json');
@@ -187,8 +168,6 @@ class ConfigTest extends TestCase
 
     public function test_MultipleFiles_AsMultipleMethods_WhenAllFilesAreInvalid_ErrorsCorrectly(): void
     {
-        $this->markTestSkipped();
-
         $this->expectException(InvalidFileException::class);
 
         $this->config->load('fixtures/config.invalid.json');
@@ -199,8 +178,6 @@ class ConfigTest extends TestCase
 
     public function test_GetTopLevelKey_FromSingleFile(): void
     {
-        $this->markTestSkipped();
-
         $this->config->load('fixtures/config.json');
 
         $result = $this->config->get('environment');
@@ -210,8 +187,6 @@ class ConfigTest extends TestCase
 
     public function test_GetTopLevelKey_ThatDoesNotExist_FromSingleFile_ErrorsCorrectly(): void
     {
-        $this->markTestSkipped();
-
         $this->expectException(InvalidKeyException::class);
 
         $this->config->load('fixtures/config.json');
@@ -223,8 +198,6 @@ class ConfigTest extends TestCase
 
     public function test_GetTopLevelSection_FromSingleFile(): void
     {
-        $this->markTestSkipped();
-
         $this->config->load('fixtures/config.json');
 
         $result = $this->config->get('database');
@@ -239,8 +212,6 @@ class ConfigTest extends TestCase
 
     public function test_GetTopLevelSection_ThatDoesNotExist_FromSingleFile(): void
     {
-        $this->markTestSkipped();
-
         $this->expectException(InvalidKeyException::class);
 
         $this->config->load('fixtures/config.json');
@@ -252,8 +223,6 @@ class ConfigTest extends TestCase
 
     public function test_GetNestedKey_FromSingleFile(): void
     {
-        $this->markTestSkipped();
-
         $this->config->load('fixtures/config.json');
 
         $result = $this->config->get('database.host');
@@ -263,8 +232,6 @@ class ConfigTest extends TestCase
 
     public function test_GetNestedKey_ThatDoesNotExist_FromSingleFile(): void
     {
-        $this->markTestSkipped();
-
         $this->expectException(InvalidKeyException::class);
 
         $this->config->load('fixtures/config.json');
@@ -276,8 +243,6 @@ class ConfigTest extends TestCase
 
     public function test_GetNestedSection_FromSingleFile(): void
     {
-        $this->markTestSkipped();
-
         $this->config->load('fixtures/config.json');
 
         $result = $this->config->get('cache.redis');
@@ -290,8 +255,6 @@ class ConfigTest extends TestCase
 
     public function test_GetNestedSection_ThatDoesNotExist_FromSingleFile(): void
     {
-        $this->markTestSkipped();
-
         $this->expectException(InvalidKeyException::class);
 
         $this->config->load('fixtures/config.json');
@@ -303,8 +266,6 @@ class ConfigTest extends TestCase
 
     public function test_GetTopLevelKey_FromMultipleFiles(): void
     {
-        $this->markTestSkipped();
-
         $this->config->load('fixtures/config.json');
         $this->config->load('fixtures/config.local.json');
 
@@ -315,8 +276,6 @@ class ConfigTest extends TestCase
 
     public function test_GetTopLevelKey_ThatDoesNotExist_FromMultipleFiles(): void
     {
-        $this->markTestSkipped();
-
         $this->expectException(InvalidKeyException::class);
 
         $this->config->load('fixtures/config.json');
@@ -329,8 +288,6 @@ class ConfigTest extends TestCase
 
     public function test_GetTopLevelSection_FromMultipleFiles(): void
     {
-        $this->markTestSkipped();
-
         $this->config->load('fixtures/config.json');
         $this->config->load('fixtures/config.local.json');
 
@@ -346,8 +303,6 @@ class ConfigTest extends TestCase
 
     public function test_GetTopLevelSection_ThatDoesNotExist_FromMultipleFiles(): void
     {
-        $this->markTestSkipped();
-
         $this->expectException(InvalidKeyException::class);
 
         $this->config->load('fixtures/config.json');
@@ -360,8 +315,6 @@ class ConfigTest extends TestCase
 
     public function test_GetNestedKey_FromMultipleFiles(): void
     {
-        $this->markTestSkipped();
-
         $this->config->load('fixtures/config.json');
         $this->config->load('fixtures/config.local.json');
 
@@ -372,8 +325,6 @@ class ConfigTest extends TestCase
 
     public function test_GetNestedKey_ThatDoesNotExist_FromMultipleFiles(): void
     {
-        $this->markTestSkipped();
-
         $this->expectException(InvalidKeyException::class);
 
         $this->config->load('fixtures/config.json');
@@ -386,8 +337,6 @@ class ConfigTest extends TestCase
 
     public function test_GetNestedSection_FromMultipleFiles(): void
     {
-        $this->markTestSkipped();
-
         $this->config->load('fixtures/config.json');
         $this->config->load('fixtures/config.local.json');
 
@@ -401,8 +350,6 @@ class ConfigTest extends TestCase
 
     public function test_GetNestedSection_ThatDoesNotExist_FromMultipleFiles(): void
     {
-        $this->markTestSkipped();
-
         $this->expectException(InvalidKeyException::class);
 
         $this->config->load('fixtures/config.json');
