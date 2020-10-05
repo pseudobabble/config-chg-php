@@ -5,8 +5,8 @@ namespace App;
 use App\Exception\InvalidFileException;
 use App\Exception\MissingFileException;
 use App\Exception\InvalidKeyException;
-use App\Parsers\JsonParser;
-use App\Parsers\YamlParser;
+use App\Parser\JsonParser;
+use App\Parser\YamlParser;
 
 /**
  * Config

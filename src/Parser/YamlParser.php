@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Parsers;
+namespace App\Parser;
 
 use App\Exception\InvalidFileException;
 use Symfony\Component\Yaml\Exception\ParseException;
